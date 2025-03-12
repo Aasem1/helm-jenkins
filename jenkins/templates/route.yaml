@@ -9,7 +9,7 @@ spec:
   host: {{ .Values.route.host }}
   to:
     kind: Service
-    name: jenkins-dr
+    name: jenkins
     weight: 100
   port:
     targetPort: 8080
