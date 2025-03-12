@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jenkins-dr
+  namespace: {{ .Values.route.namespace }}  # Uses the namespace from values.yaml
+  labels:
+    app: jenkins
+spec:
+  replicas: {{ .Values.replicaCount }}  # Configured based on values.yaml
+  selector:
+    matchLabels:
+      app: jenkins
+  template:
+    metadata:
+      labels:
+        app: jenkins
+    spec:
+      containers:
+        - name: jenkins
+          image: "{{ .Values.image.repository }}@{{ .Values.image.digest }}"  # Uses the image repository and tag from values.yaml
+          imagePullPolicy: {{ .Values.image.pullPolicy }}  # Uses pull policy from values.yaml
+          ports:
+            - name: http
+              containerPort: 8080
+            - name: agent
+              containerPort: 50000
+          env:
+            - name: http_proxy
+              value: 'http://10.230.189.34:3128'
+            - name: https_proxy
+              value: 'http://10.230.189.34:3128'
+            - name: HTTP_PROXY
+              value: 'http://10.230.189.34:3128'
+            - name: HTTPS_PROXY
+              value: 'http://10.230.189.34:3128'
+            - name: no_proxy
+              value: 'localhost,172.30.0.1:443,.internal.eg.vodafone.com'
+
+            #- name: JENKINS_USER
+             # valueFrom:
+              #  secretKeyRef:
+               #   name: {{ .Values.secrets.jenkins.name }}  # Secret name from values.yaml
+                #  key: username  # Key from the secret
+            #- name: JENKINS_PASS
+             # valueFrom:
+              #  secretKeyRef:
+               #   name: {{ .Values.secrets.jenkins.name }}  # Secret name from values.yaml
+                #  key: password  # Key from the secret
+            # Ensure the Jenkins password is also passed as an environment variable for initialization
+            #- name: JENKINS_ADMIN_PASSWORD
+             # valueFrom:
+              #  secretKeyRef:
+               #   name: {{ .Values.secrets.jenkins.name }}  # Secret name from values.yaml
+                #  key: password  # Override for Jenkins initial setup if needed
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}  # Resources section from values.yaml
+          volumeMounts:
+            - name: jenkins-home
+              mountPath: /var/lib/jenkins  # Mounts the persistent volume at the Jenkins home directory
+      volumes:
+        - name: jenkins-home
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-pvc  # Creates PVC based on release name
+
