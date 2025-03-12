@@ -47,7 +47,7 @@ autoscaling:
 # Jenkins specific section for overriding initial admin credentials
 jenkins:
   Master:
-    adminUser: ""
-    adminPassword: ""
+    adminUser: "admin"
+    adminPassword: "admin123"
 #  openShift:
  #   enableOAuth: false
