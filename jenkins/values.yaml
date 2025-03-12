@@ -7,8 +7,8 @@ image:
 route:
   enabled: true
   name: Jenkins-dr
-  host: jenkins.apps.ocp-devops.internal.eg.vodafone.com
-  namespace: jenkins
+  host: jenkins-devops.infra.ocp-prod-main.internal.eg.vodafone.com
+  namespace: devops
 
 secrets:
   jenkins:
@@ -47,7 +47,7 @@ autoscaling:
 # Jenkins specific section for overriding initial admin credentials
 jenkins:
   Master:
-    adminUser: ""
-    adminPassword: ""
+    adminUser: "admin"
+    adminPassword: "admin123"
 #  openShift:
  #   enableOAuth: false
