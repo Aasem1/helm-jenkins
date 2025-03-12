@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: jenkins-dr
+  name: jenkins
   namespace: {{ .Values.route.namespace }}
   labels:
     app: jenkins

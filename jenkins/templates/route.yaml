@@ -1,7 +1,7 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  name: jenkins-dr
+  name: jenkins
   namespace: {{ .Values.route.namespace }}
   labels:
     app: jenkins
