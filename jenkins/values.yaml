@@ -7,7 +7,7 @@ image:
 route:
   enabled: true
   name: Jenkins-dr
-  host: jenkins.apps.ocp-devops.internal.eg.vodafone.com
+  host: jenkins.apps.ocp-prod-main.internal.eg.vodafone.com
   namespace: devops
 
 secrets:
