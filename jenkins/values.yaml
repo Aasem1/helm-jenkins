@@ -6,7 +6,7 @@ image:
   pullPolicy: "IfNotPresent"
 route:
   enabled: true
-  name: Jenkins-dr
+  name: Jenkins
   host: jenkins-devops.infra.ocp-prod-main.internal.eg.vodafone.com
   namespace: devops
 
