@@ -4,7 +4,7 @@ repositories:
 
 releases:
 - name: prom-norbac-ubuntu
-  namespace: prometheus
+  namespace: openshift-gitops
   chart: prometheus-community/prometheus
   version: 13.4.0  # Replace with a version compatible with K8s 1.18
   set:
